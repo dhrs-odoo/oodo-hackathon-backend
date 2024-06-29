@@ -1,0 +1,24 @@
+{
+  "name": "rentify-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev:customer-ms": "cd hackathon-customer-ms && npm run dev",
+    "dev:gateway": "cd hackathon-gateway-ms && nodemon",
+    "dev:serviceProvider-ms": "cd hackathon-serviceProvider-ms && npm run dev",
+    "dev:all": "concurrently \"npm run dev:gateway\" \"npm run dev:serviceProvider-ms\" \"npm run dev:customer-ms\"",
+    "build:buyer": "cd buyer && npm run build",
+    "build:seller": "cd seller && npm run build",
+    "build:all": "npm run build:seller && npm run build:buyer",
+    "start:buyer": "cd buyer && npm run start",
+    "start:seller": "cd seller && npm run start",
+    "start:all": "concurrently \"npm run start:seller\" \"npm run start:buyer\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
