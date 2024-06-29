@@ -112,27 +112,7 @@ export default class ServiceProviderRepository {
       );
     }
   }
-  async FetchReviews(query) {
-    try {
-      const fetchedReviews = await ServiceProviderModel.find(query);
-      if (!fetchedReviews) {
-        throw new APIError(
-          "API Error",
-          STATUS_CODES.NOT_FOUND,
-          "Service Provider reviews not found"
-        );
-      }
-
-      return fetchedReviews;
-    } catch (err) {
-      throw new APIError(
-        "API Error",
-        STATUS_CODES.INTERNAL_ERROR,
-        "Error on Fetching review"
-      );
-    }
-  }
-
+  
   async UpdateAddress(serviceProviderId, updatedAddress) {
     try {
       const profile = await ServiceProviderModel.findOne({ serviceProviderId });
@@ -240,26 +220,7 @@ export default class ServiceProviderRepository {
     }
   }
 
-  async FindServiceProviderFromServiceProviderId({ serviceProviderId }) {
-    try {
-      console.log("ServiceProvider ", serviceProviderId);
-      const existingServiceProvider = await ServiceProviderModel.findOne({
-        serviceProviderId,
-      });
-      console.log(
-        "data of serviceProvider from find serviceProvider",
-        existingServiceProvider
-      );
-      return existingServiceProvider;
-    } catch (err) {
-      console.log(err);
-      throw new APIError(
-        "API Error",
-        STATUS_CODES.INTERNAL_ERROR,
-        "Unable to Find Service Provider"
-      );
-    }
-  }
+
 
   async FindServiceProviders({ serviceProviderIdArr, selectData, query }) {
     try {
@@ -390,40 +351,7 @@ export default class ServiceProviderRepository {
       );
     }
   }
-  async CreateOrUpdateReview(serviceProviderId, review) {
-    try {
-      console.log("Service Provider ID:", serviceProviderId);
-      console.log("Review:", review);
-
-      const serviceProvider = await ServiceProviderModel.findOne({
-        serviceProviderId,
-      });
-
-      if (!serviceProvider) {
-        console.log("ServiceProvider not found for ID:", serviceProviderId);
-        throw new APIError(
-          "API Error",
-          STATUS_CODES.INTERNAL_ERROR,
-          "ServiceProvider not found"
-        );
-      }
-
-      serviceProvider.reviews.push(review);
-      await serviceProvider.save();
-
-      console.log("Updated ServiceProvider:", serviceProvider);
-
-      return serviceProvider;
-    } catch (err) {
-      console.error("Error in CreateOrUpdateReview:", err);
-      throw new APIError(
-        "API Error",
-        STATUS_CODES.INTERNAL_ERROR,
-        "Error on adding Reviews"
-      );
-    }
-  }
-
+  
   async CreateFurnitureItem(serviceProviderId, newItem) {
     try {
       const profile = await ServiceProviderModel.findOne({ serviceProviderId });

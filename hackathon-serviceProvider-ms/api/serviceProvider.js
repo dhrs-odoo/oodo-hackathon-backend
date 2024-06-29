@@ -205,18 +205,7 @@ const serviceProvider = (app) => {
       next(err);
     }
   });
-  app.post("/createServiceProviderReview", UserAuth, async (req, res, next) => {
-    try {
-      const { serviceProviderId, review } = req.body;
-      const { data } = await service.CreateServiceProviderReview(
-        serviceProviderId,
-        review
-      );
-      return res.json(data);
-    } catch (err) {
-      next(err);
-    }
-  });
+
 
   app.post(
     "/upload-serviceProviderProfile-img",
@@ -255,15 +244,7 @@ const serviceProvider = (app) => {
       }
     }
   );
-  app.post("/getReviews", UserAuth, async (req, res, next) => {
-    try {
-      console.log(req.query.customerId);
-      const { data } = await service.getReviews(req);
-      return res.json(data);
-    } catch (err) {
-      next(err);
-    }
-  });
+
   app.post(
     "/upload-serviceProvider-product-img-videos",
     UserAuth,

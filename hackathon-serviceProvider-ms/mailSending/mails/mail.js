@@ -59,10 +59,10 @@ async function sendServiceProviderWelcomeEmail(serviceProviderEmail) {
       fs.readFileSync(
         path.join(__dirname, "mailTemplates", "serviceProviderWelcome.ejs"),
         "utf8"
-      )
-      // {
-      //   data: { firstName: serviceProvider.fullName },
-      // }
+      ),
+      {
+        data: { firstName: serviceProvider.fullName },
+      }
     );
 
     const response = await sendEmail(serviceProviderEmail, subject, text, html);
@@ -107,39 +107,39 @@ async function sendServiceProviderVerificationMail(serviceProviderEmail, link) {
     throw new Error("Verification Email could not be sent");
   }
 }
-  async function sendServiceProviderForgotMail(serviceProviderEmail, link) {
-    const subject = "Forgot Link";
-    const text = "now you are able to forgot your password using below link it is valid for 1 hour.";
-  
-    try {
-      const serviceProvider = await ServiceProviderModel.findOne({
-        email: serviceProviderEmail,
-      });
-      console.log("serviceProvider Data:", serviceProvider);
-      if (!serviceProvider) {
-        throw new Error("serviceProvider not found");
-      }
-  
-      const html = ejs.render(
-        fs.readFileSync(
-          path.join(
-            __dirname,
-            "mailTemplates",
-            "serviceProviderForgotPass.ejs"
-          ),
-          "utf8"
-        ),
-        {
-          data: { Link: link, Name: serviceProvider.firstName },
-        }
-      );
-  
-      const response = await sendEmail(serviceProviderEmail, subject, text, html);
-      console.log("forgot password  Email sent:", response);
-    } catch (error) {
-      console.error(error);
-      throw new Error("forgot password  Email could not be sent");
+async function sendServiceProviderForgotMail(serviceProviderEmail, link) {
+  const subject = "Forgot Link";
+  const text =
+    "now you are able to forgot your password using below link it is valid for 1 hour.";
+
+  try {
+    const serviceProvider = await ServiceProviderModel.findOne({
+      email: serviceProviderEmail,
+    });
+    console.log("serviceProvider Data:", serviceProvider);
+    if (!serviceProvider) {
+      throw new Error("serviceProvider not found");
     }
 
+    const html = ejs.render(
+      fs.readFileSync(
+        path.join(__dirname, "mailTemplates", "serviceProviderForgotPass.ejs"),
+        "utf8"
+      ),
+      {
+        data: { Link: link, Name: serviceProvider.firstName },
+      }
+    );
+
+    const response = await sendEmail(serviceProviderEmail, subject, text, html);
+    console.log("forgot password  Email sent:", response);
+  } catch (error) {
+    console.error(error);
+    throw new Error("forgot password  Email could not be sent");
+  }
 }
-export { sendServiceProviderVerificationMail, sendServiceProviderWelcomeEmail, sendServiceProviderForgotMail };
+export {
+  sendServiceProviderVerificationMail,
+  sendServiceProviderWelcomeEmail,
+  sendServiceProviderForgotMail,
+};

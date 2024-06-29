@@ -37,7 +37,7 @@ const customer = (app) => {
     }
   });
 
-  app.post("/auth/forgotPassword", UserAuth, async (req, res, next) => {
+  app.post("/auth/forgotPassword", async (req, res, next) => {
     try {
       const { email } = req.body;
       const { data } = await service.forgotPasswordRequestUrl({ email });

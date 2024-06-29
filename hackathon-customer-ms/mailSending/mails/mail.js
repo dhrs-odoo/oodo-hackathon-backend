@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
 
 function sendEmail(to, subject, text, html) {
   const mailOptions = {
-    from: "karymitra@gmail.com",
+    from: "info.rentiy12@gmail.com",
     to,
     subject,
     text,
@@ -43,7 +43,7 @@ function sendEmail(to, subject, text, html) {
 }
 
 async function sendCustomerWelcomeEmail(customerEmail) {
-  const subject = "Welcome to karyMitra";
+  const subject = "Welcome to rentify";
   const text = "WELCOME!";
 
   try {
@@ -59,10 +59,10 @@ async function sendCustomerWelcomeEmail(customerEmail) {
       fs.readFileSync(
         path.join(__dirname, "mailTemplates", "customerWelcome.ejs"),
         "utf8"
-      )
-      // {
-      //   data: { firstname: customer.fullName },
-      // }
+      ),
+      {
+        data: { firstName: customer.fullName },
+      }
     );
 
     const response = await sendEmail(customerEmail, subject, text, html);

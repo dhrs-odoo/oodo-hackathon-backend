@@ -28,37 +28,6 @@ const addressSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-const workHistorySchema = new mongoose.Schema(
-  {
-    workId: {
-      type: String,
-      default: uuid,
-    },
-    customerId: {
-      type: String,
-    },
-    serviceName: {
-      type: String,
-    },
-    servicePhotos: {
-      type: [
-        {
-          type: [String],
-          validate: {
-            validator: function (array) {
-              return array.length <= 20;
-            },
-            message: "Service photos array cannot have more than 20 items.",
-          },
-        },
-      ],
-    },
-    rating: {
-      type: Number,
-    },
-  },
-  { timestamps: true }
-);
 
 const bookingSchema = new mongoose.Schema(
   {
@@ -94,50 +63,6 @@ const bookingSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const reviewSchema = new mongoose.Schema(
-  {
-    reviewId: {
-      type: String,
-      default: uuid,
-    },
-    customerId: {
-      type: String,
-    },
-    serviceName: {
-      type: String,
-    },
-    review: {
-      type: String,
-    },
-    isVisibleOnWebsite: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    isApprovedByAdmin: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-    rating: {
-      type: Number,
-    },
-    servicePhotos: {
-      type: [
-        {
-          type: [String],
-          validate: {
-            validator: function (array) {
-              return array.length <= 20;
-            },
-            message: "Service photos array cannot have more than 20 items.",
-          },
-        },
-      ],
-    },
-  },
-  { timestamps: true }
-);
 
 const specializationsSchema = new mongoose.Schema({
   value: { type: String },
@@ -314,12 +239,6 @@ const serviceProvider = new mongoose.Schema(
     },
     furnitureItems: {
       type: [furnitureItemSchema],
-    },
-    workHistory: {
-      type: [workHistorySchema],
-    },
-    reviews: {
-      type: [reviewSchema],
     },
     booking: {
       type: [bookingSchema],
