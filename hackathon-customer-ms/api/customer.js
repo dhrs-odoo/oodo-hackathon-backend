@@ -37,8 +37,7 @@ const customer = (app) => {
     }
   });
 
-    
-  app.post("/auth/forgotPassword", async (req, res, next) => {
+  app.post("/auth/forgotPassword", UserAuth, async (req, res, next) => {
     try {
       const { email } = req.body;
       const { data } = await service.forgotPasswordRequestUrl({ email });
@@ -47,17 +46,25 @@ const customer = (app) => {
       next(err);
     }
   });
-  
-  app.post("/auth/forgotPassword/verify/:emailId/:token", async (req, res, next) => {
-    try {
-      const { emailId, token } = req.params;
-      const {newPassword} = req.body;
-      const { data } = await service.forgotUserPassword(req, token, emailId, newPassword);
-      return res.json(data);
-    } catch (err) {
-      next(err);
+
+  app.post(
+    "/auth/forgotPassword/verify/:emailId/:token",
+    async (req, res, next) => {
+      try {
+        const { emailId, token } = req.params;
+        const { newPassword } = req.body;
+        const { data } = await service.forgotUserPassword(
+          req,
+          token,
+          emailId,
+          newPassword
+        );
+        return res.json(data);
+      } catch (err) {
+        next(err);
+      }
     }
-  });
+  );
 
   app.get("/auth/verify/:token", async (req, res, next) => {
     try {

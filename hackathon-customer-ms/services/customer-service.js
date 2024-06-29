@@ -66,7 +66,7 @@ export default class CustomerService {
           email: existingCustomer.email,
         });
         const emailId = existingCustomer.email;
-        const forgotPasswordUrl = `${process.env.MAIN_BACKEND_URL}/api/v1/customer/auth/forgotPassword/verify/${emailId}/${token}`;
+        const PasswordUrl = `${process.env.MAIN_BACKEND_URL}/api/v1/customer/auth/forgotPassword/verify/${emailId}/${token}`;
         console.log(forgotPasswordUrl);
         sendCustomerForgotPasswordLink(email, forgotPasswordUrl);
         return FormateData({

@@ -55,30 +55,17 @@ const addressSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const workerHistorySchema = new mongoose.Schema(
+const orderSchema = new mongoose.Schema(
   {
-    workerId: {
+    orderId: {
       type: String,
     },
-    serviceName: {
+    orderName: {
       type: String,
     },
   },
   { timestamps: true }
 );
-
-const tipHistorySchema = new mongoose.Schema({
-  tipId: {
-    type: String,
-    default: uuid,
-  },
-  amount: {
-    type: String,
-  },
-  currency: {
-    type: String,
-  },
-});
 
 const customer = new mongoose.Schema(
   {
@@ -133,10 +120,7 @@ const customer = new mongoose.Schema(
       default: false,
     },
     workerHistory: {
-      type: [workerHistorySchema],
-    },
-    tipHistory: {
-      type: [tipHistorySchema],
+      type: [orderSchema],
     },
     profileImagePath: {
       type: String,

@@ -106,35 +106,39 @@ async function sendCustomerVerificationMail(customerEmail, link) {
     throw new Error("Verification Email could not be sent");
   }
 }
-  async function sendCustomerForgotPasswordLink(customerEmail, link) {
-    const subject = "Forgot Password";
-    const text = "You Can Now Forgot Your Password";
+async function sendCustomerForgotPasswordLink(customerEmail, link) {
+  const subject = "Forgot Password";
+  const text = "You Can Now Forgot Your Password";
 
-    try {
-      const customer = await CustomerModel.findOne({
-        email: customerEmail,
-      });
-      console.log("customer Data:", customer);
-      if (!customer) {
-        throw new Error("customer not found");
-      }
-
-      const html = ejs.render(
-        fs.readFileSync(
-          path.join(__dirname, "mailTemplates", "customerForgotPassLink.ejs"),
-          "utf8"
-        ),
-        {
-          data: { Link: link, Name: customer.firstName },
-        }
-      );
-
-      const response = await sendEmail(customerEmail, subject, text, html);
-      console.log("Verification Email sent:", response);
-    } catch (error) {
-      console.error(error);
-      throw new Error("Verification Email could not be sent");
+  try {
+    const customer = await CustomerModel.findOne({
+      email: customerEmail,
+    });
+    console.log("customer Data:", customer);
+    if (!customer) {
+      throw new Error("customer not found");
     }
-  
+
+    const html = ejs.render(
+      fs.readFileSync(
+        path.join(__dirname, "mailTemplates", "customerForgotPass.ejs"),
+        "utf8"
+      ),
+      {
+        data: { Link: link, Name: customer.firstName },
+      }
+    );
+
+    const response = await sendEmail(customerEmail, subject, text, html);
+    console.log("Verification Email sent:", response);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Verification Email could not be sent");
+  }
 }
-export { sendCustomerWelcomeEmail, sendCustomerVerificationMail, sendCustomerForgotPasswordLink };
+
+export {
+  sendCustomerWelcomeEmail,
+  sendCustomerVerificationMail,
+  sendCustomerForgotPasswordLink,
+};
